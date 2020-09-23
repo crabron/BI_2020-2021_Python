@@ -1,5 +1,4 @@
 import pandas as pd
-from itertools import count
 
 df = pd.read_csv("units-conversion-table.csv", sep=",")
 df = df.rename(columns={'conversion_type': 'Conversion_type',
