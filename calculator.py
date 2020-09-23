@@ -35,5 +35,3 @@ while scr_er == 0:
     elif b == "*":
         print(a * c)
     break
-
-
