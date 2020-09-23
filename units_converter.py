@@ -1,37 +1,31 @@
-import pandas as pd
+Traceback (most recent call last):
+  File "/home/crabron/PycharmProjects/pythonProject/venv/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 2891, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1675, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1683, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: False
 
+The above exception was the direct cause of the following exception:
 
-df = pd.read_csv("units-conversion-table.csv", sep=",")
-df = df.rename(columns={'conversion_type': 'Conversion_type',
-                        'from': 'From',
-                        'to': 'To',
-                        'multiply_by': 'Multiply_by'}, inplace=False)
-
-solitude_type = [i for i in df.Conversion_type.unique()]
-solitude_type_num = [i for i in range(1, len(solitude_type) + 1)]
-solitude_type = zip(solitude_type_num, solitude_type)
-d_solitude_type = dict(solitude_type)
-for i in d_solitude_type.keys():
-    print(i, d_solitude_type.get(i))
-print("Категории конвертации. Введите цифру соответствующее нужной категории.")
-sel_1 = int(input())
-type_get = d_solitude_type.get(sel_1)
-solitude_from = [i for i in df[df["Conversion_type"] == type_get].From.unique()]
-solitude_from_num = [i for i in range(1, len(solitude_from) + 1)]
-solitude_from = zip(solitude_from_num, solitude_from)
-d_solitude_from = dict(solitude_from)
-for i in d_solitude_from.keys():
-    print(i, d_solitude_from.get(i))
-print("В данной категории возможна конвертация следующих штуковин. "
-      "Введите число соответствующее нужной штуковине, из которой Вы хотите конвертировать.")
-[print(i[0], i[1]) for i in solitude_from]
-sel_2 = int(input())
-print("В какую штуковину из списка выше вы хотите конвертировать?")
-sel_3 = int(input())
-print("Сколько у вас штуковин для конвертации?")
-sel_2_value = float(input())
-print("Предупреждение:")
-df1 = df[df["To"] == d_solitude_from.get(sel_2)]
-df2 = df1[df["From"] == d_solitude_from.get(sel_3)]
-print("Результат:")
-print(sel_2_value * float(df2.iloc[0]["Multiply_by"]))
+Traceback (most recent call last):
+  File "/home/crabron/PycharmProjects/pythonProject/main.py", line 38, in <module>
+    (df['From' == "Kilometer"]) &
+  File "/home/crabron/PycharmProjects/pythonProject/venv/lib/python3.7/site-packages/pandas/core/frame.py", line 2902, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/crabron/PycharmProjects/pythonProject/venv/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 2893, in get_loc
+    raise KeyError(key) from err
+KeyError: False
+      Conversion_type       From          To     Multiply_by
+0              Length  Kilometer       Meter     1000.000000
+1              Length  Kilometer  Centimeter   100000.000000
+2              Length  Kilometer  Millimeter  1000000.000000
+3              Length  Kilometer        Mile        0.621371
+4              Length  Kilometer        Yard     1093.610000
+...               ...        ...         ...             ...
+1132  Digital Storage   Pebibyte    Terabyte     1125.900000
+1133  Digital Storage   Pebibyte     Tebibit     8192.000000
+1134  Digital Storage   Pebibyte    Tebibyte     1024.000000
+1135  Digital Storage   Pebibyte     Petabit        9.007200
+1136  Digital Storage   Pebibyte    Petabyte        1.125900
