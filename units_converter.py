@@ -35,4 +35,3 @@ df1 = df[df["To"] == d_solitude_from.get(sel_2)]
 df2 = df1[df["From"] == d_solitude_from.get(sel_3)]
 print("Результат:")
 print(sel_2_value * float(df2.iloc[0]["Multiply_by"]))
-
