@@ -1,5 +1,6 @@
 import pandas as pd
-#"giveme some conflict"
+
+
 df = pd.read_csv("units-conversion-table.csv", sep=",")
 df = df.rename(columns={'conversion_type': 'Conversion_type',
                         'from': 'From',
@@ -12,7 +13,7 @@ solitude_type = zip(solitude_type_num, solitude_type)
 d_solitude_type = dict(solitude_type)
 for i in d_solitude_type.keys():
     print(i, d_solitude_type.get(i))
-print("Категории конвертации. Введите число соответствующее нужной категории.")
+print("Категории конвертации. Введите цифру соответствующее нужной категории.")
 sel_1 = int(input())
 type_get = d_solitude_type.get(sel_1)
 solitude_from = [i for i in df[df["Conversion_type"] == type_get].From.unique()]
