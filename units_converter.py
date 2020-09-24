@@ -1,7 +1,7 @@
 import pandas as pd
 from itertools import count
 
-df = pd.read_csv("/home/gladkov/storage/trash/BI/PY/BI_2020-2021_Python/units-conversion-table.csv", sep=",")
+df = pd.read_csv("units-conversion-table.csv", sep=",")
 df = df.rename(columns={'conversion_type': 'Conversion_type',
                         'from': 'From',
                         'to': 'To',
