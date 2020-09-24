@@ -1,26 +1,17 @@
 import pandas as pd
+from itertools import count
 
-df = pd.read_csv("units-conversion-table.csv", sep=",")
+df = pd.read_csv("/home/gladkov/storage/trash/BI/PY/BI_2020-2021_Python/units-conversion-table.csv", sep=",")
 df = df.rename(columns={'conversion_type': 'Conversion_type',
                         'from': 'From',
                         'to': 'To',
                         'multiply_by': 'Multiply_by'}, inplace=False)
-solitude_type = [i for i in df.Conversion_type.unique()]
-solitude_type_num = [i for i in range(1, len(solitude_type) + 1)]
-solitude_type = zip(solitude_type_num, solitude_type)
-d_solitude_type = dict(solitude_type)
-for i in d_solitude_type.keys():
-    print(i, d_solitude_type.get(i))
+solitude_type_d = dict(zip(count(1), df.Conversion_type.unique()))
+[print(i, v) for i, v in solitude_type_d.items()]
 print("Категории конвертации. Введите число соответствующее нужной категории.")
 sel_1 = int(input())
-type_get = d_solitude_type.get(sel_1)
-solitude_from = [i for i in
-                 df[df["Conversion_type"] == type_get].From.unique()]
-solitude_from_num = [i for i in range(1, len(solitude_from) + 1)]
-solitude_from = zip(solitude_from_num, solitude_from)
-d_solitude_from = dict(solitude_from)
-for i in d_solitude_from.keys():
-    print(i, d_solitude_from.get(i))
+d_solitude_from = dict(zip(count(1), df[df["Conversion_type"] == type_get].From.unique()))
+[print(i, v) for i, v in d_solitude_from.items()]
 print("В данной категории возможна конвертация следующих штуковин. "
       "Введите число соответствующее нужной штуковине,"
       " из которой Вы хотите конвертировать.")
@@ -33,4 +24,4 @@ sel_2_value = float(input())
 print("Результат:")
 print(sel_2_value * float(df[(df['From'] == d_solitude_from.get(sel_2)) & \
                              (df['To'] == d_solitude_from.get(sel_3))].iloc[0]["Multiply_by"]))
-                             
+                           
