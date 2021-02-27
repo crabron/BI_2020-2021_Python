@@ -22,6 +22,5 @@ sel_3 = int(input())
 print("Сколько у вас штуковин для конвертации?")
 sel_2_value = float(input())
 print("Результат:")
-print(sel_2_value * float(df[(df['From'] == d_solitude_from.get(sel_2)) & \
+print(sel_2_value * float(df[(df['From'] == d_solitude_from.get(sel_2)) &
                              (df['To'] == d_solitude_from.get(sel_3))].iloc[0]["Multiply_by"]))
-                           

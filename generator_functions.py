@@ -3,7 +3,6 @@ from Bio import SeqIO
 
 
 def generate(a):
-    res = []
     for a in range(1, a + 1):
         yield from [''.join(i) for i in product('ATGC', repeat=a)]
 
