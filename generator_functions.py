@@ -8,6 +8,6 @@ def generate(a):
         yield from [''.join(i) for i in product('ATGC', repeat=a)]
 
 
-def dumb_translater(path):
+def dumb_translater(path, table="Standart"):
     for fasta in SeqIO.parse(path, "fasta"):
-        yield from ["M" + str(i.translate(table="Standard", to_stop=True)) for i in fasta.seq.split("ATG")]
+        yield from ["M" + str(i.translate(table=table, to_stop=True)) for i in fasta.seq.split("ATG")]
