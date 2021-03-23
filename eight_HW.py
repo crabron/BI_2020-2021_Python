@@ -1,68 +1,49 @@
+tables = dict(trans_table_DNA={
+    'A': 'T',
+    'T': 'A',
+    'C': 'G',
+    'G': 'C'
+}, trans_table_RNA={
+    'A': 'U',
+    'U': 'A',
+    'C': 'G',
+    'G': 'C'
+}, trans_table_DNA_RNA={
+    'A': 'U',
+    'T': 'A',
+    'C': 'G',
+    'G': 'C'
+})
+
+
 class NAcid(object):
-    def __init__(self, seq):
-        self.__seq_string = seq
-        self.__seq = tuple(seq)
-        self.trans_table_DNA = self.__seq_string.maketrans(
-            {
-                'A': 'T',
-                'T': 'A',
-                'C': 'G',
-                'G': 'C'
-            }
-        )
-        self.trans_table_RNA = self.__seq_string.maketrans(
-            {
-                'A': 'U',
-                'U': 'A',
-                'C': 'G',
-                'G': 'C'
-            }
-        )
-        self.trans_table_DNA_RNA = self.__seq_string.maketrans(
-            {
-                'A': 'U',
-                'T': 'A',
-                'C': 'G',
-                'G': 'C'
-            }
-        )
+    def __init__(self, seq) -> object:
+        self.seq_string = seq
+        self.seq = tuple(seq)
 
     def __str__(self):
-        return f"{self.__seq_string}"
+        return f"{self.seq_string}"
 
     def __iter__(self):
         self.__n = 0
-        return iter(self.__seq_string)
+        return iter(self.seq_string)
 
     def __next__(self):
-        if self.__n + 1 < len(self.__seq_string):
+        if self.__n + 1 < len(self.seq_string):
             self.__n += 1
-            return self.__seq_string[self.__n]
+            return self.seq_string[self.__n]
         else:
             raise StopIteration
 
     def __eq__(self, other):
         if type(other) is type(self):
-            return self.__seq_string == other.__seq_string
+            return self.seq_string == other.__seq_string
 
     def __hash__(self):
-        return hash(self.__seq_string)
+        return hash(self.seq_string)
 
-    def transcribe(self):
-        if isinstance(self, DNA):
-            transcripted_seq = self.__seq_string.translate(self.trans_table_DNA_RNA)
-            return RNA(transcripted_seq)
-            # return RNA(translated_dna)
-        else:
-            print("cant translate notDNA")
-
-    def reverse_compliment(self):
-        if isinstance(self, DNA):
-            transcripted_seq = self.__seq_string.translate(trans_table)
-            return RNA(transcripted_seq)
-            # return RNA(translated_dna)
-        if isinstance(self, RNA):
-            print("cant translate notDNA")
+    def reverse_seq(self):
+        return self.seq_string[::-1]
 
 
 class DNA(NAcid):
@@ -71,6 +52,19 @@ class DNA(NAcid):
     def __str__(self):
         return "DNA sequence: " + super().__str__()
 
+    def transcribe(self):
+        if isinstance(self, DNA):
+            table_dna_rna = self.seq_string.maketrans(tables['trans_table_DNA_RNA'])
+            transcribed_seq = self.seq_string.translate(table_dna_rna)
+            return RNA(transcribed_seq)
+        else:
+            print("cant translate notDNA")
+
+    def reverse_complement(self):
+        table_dna = self.reverse_seq().maketrans(tables['trans_table_DNA'])
+        transcribed_seq = self.seq_string.translate(table_dna)
+        return DNA(transcribed_seq)
+
 
 class RNA(NAcid):
     pass
@@ -78,11 +72,8 @@ class RNA(NAcid):
     def __str__(self):
         return "RNA sequence: " + super().__str__()
 
-
-a = DNA('AGGAA')
-b = RNA('AGAA')
-
-print(a.transcribe())
-# print(b.translate())
-
-print(a)
+    @property
+    def reverse_complement(self):
+        table_rna = self.reverse_seq().maketrans(tables['trans_table_RNA'])
+        transcribed_seq = self.seq_string.translate(table_rna)
+        return RNA(transcribed_seq)
