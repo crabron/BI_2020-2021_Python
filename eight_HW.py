@@ -1,3 +1,5 @@
+# вынесено в начале, т.к. возможны другие какие-либо другие варианты кодировки
+
 tables = dict(trans_table_DNA={
     'A': 'T',
     'T': 'A',
@@ -16,28 +18,26 @@ tables = dict(trans_table_DNA={
 })
 
 
-class NAcid(object):
-    def __init__(self, seq) -> object:
-        self.seq_string = seq
-        self.seq = tuple(seq)
+class DNA:
+    def __init__(self, seq):
+        self.type = "DNA"
+        self.seq_string = seq.upper()
+        for i in self.seq_string:
+            agct = ["A", "G", "C", "T"]
+            if i not in agct:
+                raise TypeError(
+                    "DNA should contain only AGCT characters"
+                )
 
     def __str__(self):
-        return f"{self.seq_string}"
+        return f"DNA sequence:{self.seq_string}"
 
     def __iter__(self):
-        self.__n = 0
         return iter(self.seq_string)
-
-    def __next__(self):
-        if self.__n + 1 < len(self.seq_string):
-            self.__n += 1
-            return self.seq_string[self.__n]
-        else:
-            raise StopIteration
 
     def __eq__(self, other):
         if type(other) is type(self):
-            return self.seq_string == other.__seq_string
+            return self.seq_string == other.seq_string
 
     def __hash__(self):
         return hash(self.seq_string)
@@ -45,12 +45,11 @@ class NAcid(object):
     def reverse_seq(self):
         return self.seq_string[::-1]
 
-
-class DNA(NAcid):
-    pass
-
-    def __str__(self):
-        return "DNA sequence: " + super().__str__()
+    def gc_content(self):
+        gc = 0
+        if len(self.seq_string) > 0:
+            gc += sum(map(self.seq_string.count, ['G', 'C'])) / len(self.seq_string)
+        return gc
 
     def transcribe(self):
         if isinstance(self, DNA):
@@ -66,13 +65,39 @@ class DNA(NAcid):
         return DNA(transcribed_seq)
 
 
-class RNA(NAcid):
-    pass
+class RNA:
+    def __init__(self, seq):
+        self.type = "RNA"
+        self.seq_string = seq.upper()
+        for i in self.seq_string:
+            agcu = ["A", "G", "C", "U"]
+            if i not in agcu:
+                raise TypeError(
+                    "RNA should contain only AGCU characters"
+                )
 
     def __str__(self):
-        return "RNA sequence: " + super().__str__()
+        return f"RNA sequence:{self.seq_string}"
 
-    @property
+    def __iter__(self):
+        return iter(self.seq_string)
+
+    def __eq__(self, other):
+        if type(other) is type(self):
+            return self.seq_string == other.seq_string
+
+    def __hash__(self):
+        return hash(self.seq_string)
+
+    def reverse_seq(self):
+        return self.seq_string[::-1]
+
+    def gc_content(self):
+        gc = 0
+        if len(self.seq_string) > 0:
+            gc += sum(map(self.seq_string.count, ['G', 'C'])) / len(self.seq_string)
+        return gc
+
     def reverse_complement(self):
         table_rna = self.reverse_seq().maketrans(tables['trans_table_RNA'])
         transcribed_seq = self.seq_string.translate(table_rna)
