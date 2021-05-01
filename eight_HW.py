@@ -102,10 +102,3 @@ class RNA:
         table_rna = self.reverse_seq().maketrans(tables['trans_table_RNA'])
         transcribed_seq = self.seq_string.translate(table_rna)
         return RNA(transcribed_seq)
-
-rna_regular = RNA('AAAAUUUUGGCCaaaa')
-print(rna_regular.reverse_complement())
-
-
-dna_regular = DNA('AAAATTTTGGCCAAAA')
-print(dna_regular.reverse_complement())
